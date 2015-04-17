@@ -2,13 +2,14 @@
 noColor='\033[0m'
 red='\033[0;31m'
 
+topdir=$(git rev-parse --show-toplevel)
 files=$(git diff --name-only | cat)
 
 for file in $files
 do
   clear
   date
-  git diff -- $file
+  git diff -- $topdir/$file
   git status
   echo "Actions to available perfom:"
   echo -e "  ${red}a${noColor}: Git Add File"
