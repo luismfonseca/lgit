@@ -1,2 +1,2 @@
 # lgit
-Luís' Git
+Luís' Git. Seems legit.
