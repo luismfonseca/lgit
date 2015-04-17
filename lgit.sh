@@ -17,26 +17,26 @@ do
   echo -e "  ${red}s${noColor}: Skip this File"
   echo -e "  ${red}r${noColor}: Revert this File"
   echo -e "  ${red}d${noColor}: Revert this File Interactive"
-  echo -e "  ${red}q${noColor}: Quit ldiff"
+  echo -e "  ${red}q${noColor}: Quit lgit"
   read -n 1 action
   case $action in
   a)
     clear
-    git add $file
+    git add $topdir/$file
     added=true
   ;;
   i)
     clear
-    git add --patch $file
+    git add --patch $topdir/$file
     added=true
   ;;
   s)
   ;;
   r)
-    git checkout -- $file
+    git checkout -- $topdir/$file
   ;;
   d)
-    git checkout --patch $file
+    git checkout --patch $topdir/$file
   ;;
   q)
     exit
@@ -55,7 +55,7 @@ then
   echo "Actions to available perfom:"
   echo -e "  ${red}c${noColor}: Git commit"
   echo -e "  ${red}p${noColor}: Git commit & git push"
-  echo -e "  ${red}s${noColor}: Skip this commit"
+  echo -e "  ${red}q${noColor}: Quit lgit"
   read -n 1 action
   case $action in
     c)
@@ -69,7 +69,7 @@ then
       git commit -m "${message}"
       git push
     ;;
-    s)
+    q)
     ;;
   esac
 else
