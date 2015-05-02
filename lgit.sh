@@ -2,6 +2,13 @@
 noColor='\033[0m'
 red='\033[0;31m'
 
+$(git status > /dev/null 2>&1)
+if [ $? != 0 ]
+then
+  echo "Not a git repository (or any of the parent directories)"
+  exit 1
+fi
+
 topdir=$(git rev-parse --show-toplevel)
 files=$(git diff --name-only | cat)
 
