@@ -1,11 +1,12 @@
 #!/bin/bash
 noColor='\033[0m'
 red='\033[0;31m'
+date_format="%Y-%m-%d %H:%M:%S"
 
 perform_action_on_file() {
   file=$1
   clear
-  date
+  date +"$date_format"
   git diff -- $topdir/$file
   git status
   echo "Actions to available perfom:"
@@ -64,7 +65,7 @@ done
 if [ "$untrackedfiles" ]
 then
   clear
-  date
+  date +"$date_format"
   echo "Untracked files:"
   echo ""
   for untrackedfile in $untrackedfiles
@@ -108,7 +109,7 @@ fi
 if [ $added ]
 then
   clear
-  date
+  date +"$date_format"
   git status
   echo "Actions to available perfom:"
   echo -e "  ${red}c${noColor}: Git commit"
