@@ -3,7 +3,7 @@ noColor='\033[0m'
 red='\033[0;31m'
 date_format="%Y-%m-%d %H:%M:%S"
 
-$(git status > /dev/null 2>&1)
+git status > /dev/null 2>&1
 if [ $? != 0 ]
 then
   echo "Not a git repository (or any of the parent directories)."
@@ -19,7 +19,7 @@ perform_action_on_file() {
   extra_diff_args=$2
   clear
   date +"$date_format"
-  git diff $extra_diff_args $topdir/$file
+  git diff $extra_diff_args "$topdir/$file"
   git status
   echo "Actions to available perform:"
   echo -e "  ${red}a${noColor}: Git Add File"
@@ -32,21 +32,21 @@ perform_action_on_file() {
   case $action in
   a)
     clear
-    git add $topdir/$file
+    git add "$topdir/$file"
     added=true
   ;;
   i)
     clear
-    git add --patch $topdir/$file
+    git add --patch "$topdir/$file"
     added=true
   ;;
   s)
   ;;
   r)
-    git checkout -- $topdir/$file
+    git checkout -- "$topdir/$file"
   ;;
   d)
-    git checkout --patch $topdir/$file
+    git checkout --patch "$topdir/$file"
   ;;
   q)
     exit
@@ -86,14 +86,14 @@ then
     y)
     for untrackedfile in $untrackedfiles
     do
-      perform_action_on_file $untrackedfile "--no-index -- /dev/null"
+      perform_action_on_file "$untrackedfile" "--no-index -- /dev/null"
     done
     ;;
     a)
-      $(git ls-files -z -o --exclude-standard | xargs -0 git add)
+      git ls-files -z -o --exclude-standard | xargs -0 git add
     ;;
     r)
-      $(git clean -dfx)
+      git clean -dfx
     ;;
     s)
     ;;
