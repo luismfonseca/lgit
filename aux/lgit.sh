@@ -33,12 +33,10 @@ perform_action_on_file() {
   a)
     clear
     git add "$topdir/$file"
-    added=true
   ;;
   i)
     clear
     git add --patch "$topdir/$file"
-    added=true
   ;;
   s)
   ;;
@@ -107,7 +105,7 @@ then
   esac
 fi
 
-if [ $added ]
+if [ "$(git diff --name-only --cached | cat)" ]
 then
   clear
   date +"$date_format"
