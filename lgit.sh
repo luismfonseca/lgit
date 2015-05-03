@@ -2,18 +2,8 @@
 noColor='\033[0m'
 red='\033[0;31m'
 
-$(git status > /dev/null 2>&1)
-if [ $? != 0 ]
-then
-  echo "Not a git repository (or any of the parent directories)"
-  exit 1
-fi
-
-topdir=$(git rev-parse --show-toplevel)
-files=$(git diff --name-only | cat)
-
-for file in $files
-do
+perform_action_on_file() {
+  file=$1
   clear
   date
   git diff -- $topdir/$file
@@ -53,7 +43,68 @@ do
     sleep 0.5
   ;;
   esac
+}
+
+$(git status > /dev/null 2>&1)
+if [ $? != 0 ]
+then
+  echo "Not a git repository (or any of the parent directories)"
+  exit 1
+fi
+
+topdir=$(git rev-parse --show-toplevel)
+files=$(git diff --name-only | cat)
+untrackedfiles=$(git ls-files --others --exclude-standard)
+
+for file in $files
+do
+  perform_action_on_file $file
 done
+
+if [ "$untrackedfiles" ]
+then
+  clear
+  date
+  echo "Untracked files:"
+  echo ""
+  for untrackedfile in $untrackedfiles
+  do
+    echo -e "\t${red}$untrackedfile${noColor}"
+  done
+  echo -e ""
+  echo "Do you which to add them?"
+  echo "Actions to available perfom:"
+  echo -e "  ${red}y${noColor}: Yes"
+  echo -e "  ${red}a${noColor}: Yes, all"
+  echo -e "  ${red}r${noColor}: No, remove all"
+  echo -e "  ${red}s${noColor}: No, skip this"
+  echo -e "  ${red}q${noColor}: Quit lgit"
+  read -n 1 action
+  case $action in
+    y)
+    for untrackedfile in $untrackedfiles
+    do
+      perform_action_on_file $untrackedfile
+    done
+    ;;
+    a)
+      $(git ls-files -z -o --exclude-standard | xargs -0 git add)
+    ;;
+    r)
+      $(git clean -dfx)
+    ;;
+    s)
+    ;;
+    q)
+      exit
+    ;;
+    *)
+      echo "Unkown command. Ignoring..."
+      sleep 0.5
+    ;;
+  esac
+fi
+
 if [ $added ]
 then
   clear
