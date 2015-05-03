@@ -3,6 +3,13 @@ noColor='\033[0m'
 red='\033[0;31m'
 date_format="%Y-%m-%d %H:%M:%S"
 
+$(git status > /dev/null 2>&1)
+if [ $? != 0 ]
+then
+  echo "Not a git repository (or any of the parent directories)."
+  exit 1
+fi
+
 topdir=$(git rev-parse --show-toplevel)
 files=$(git diff --name-only | cat)
 untrackedfiles=$(git ls-files --others --exclude-standard)
@@ -50,13 +57,6 @@ perform_action_on_file() {
   ;;
   esac
 }
-
-$(git status > /dev/null 2>&1)
-if [ $? != 0 ]
-then
-  echo "Not a git repository (or any of the parent directories)"
-  exit 1
-fi
 
 for file in $files
 do
