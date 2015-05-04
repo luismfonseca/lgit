@@ -13,15 +13,15 @@ next_check=$(date -j -v +"$update_threshold_days"d -f "%Y%m%d" "$version" +"%Y%m
 if [ -f "$last_check_file" ]
 then
   last_check=$(cat "$last_check_file")
-  rm "$last_check_file" > /dev/null 2>&1
 else
   last_check=$today
 fi
-echo "$today" > "$last_check_file"
 next_check2=$(date -j -v +"$update_threshold_days"d -f "%Y%m%d" "$last_check" +"%Y%m%d")
 
 if [ "$today" -ge "$next_check" ] || [ "$today" -ge "$next_check2" ]
 then
+  rm "$last_check_file" > /dev/null 2>&1
+  echo "$today" > "$last_check_file"
   echo -e "Updating ${red}lgit${noColor}..."
   cd "$DIR" && git pull > /dev/null 2>&1
 
