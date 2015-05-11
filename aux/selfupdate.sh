@@ -3,6 +3,7 @@ noColor='\033[0m'
 red='\033[0;31m'
 
 DIR=$1
+version=$(cd "$DIR" && date -j -f "%Y-%m-%d %T %z" "$(git show -s --format=%ci head | cat)" +"%Y%m%d")
 last_check_file=$DIR/aux/.last_check
 
 update_threshold_days=7
