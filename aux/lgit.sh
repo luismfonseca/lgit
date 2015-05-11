@@ -129,6 +129,10 @@ then
     ;;
     q)
     ;;
+    *)
+      echo "Unkown command. Ignoring..."
+      sleep 0.5
+    ;;
   esac
 else
   echo "Nothing to commit..."
