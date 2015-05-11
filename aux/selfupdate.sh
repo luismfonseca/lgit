@@ -12,7 +12,7 @@ if [ -f "$last_check_file" ]
 then
   last_check=$(cat "$last_check_file")
 else
-  echo "First tiem: $last_check"
+  last_check=19700101
 fi
 next_check=$(date -j -v +"$update_threshold_days"d -f "%Y%m%d" "$last_check" +"%Y%m%d")
 
