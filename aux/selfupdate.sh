@@ -7,18 +7,16 @@ last_check_file=$DIR/aux/.last_check
 
 update_threshold_days=7
 today=$(date +"%Y%m%d")
-version=$(cd "$DIR" && date -j -f "%Y-%m-%d %T %z" "$(git show -s --format=%ci head | cat)" +"%Y%m%d")
-next_check=$(date -j -v +"$update_threshold_days"d -f "%Y%m%d" "$version" +"%Y%m%d")
 
 if [ -f "$last_check_file" ]
 then
   last_check=$(cat "$last_check_file")
 else
-  last_check=$today
+  echo "First tiem: $last_check"
 fi
-next_check2=$(date -j -v +"$update_threshold_days"d -f "%Y%m%d" "$last_check" +"%Y%m%d")
+next_check=$(date -j -v +"$update_threshold_days"d -f "%Y%m%d" "$last_check" +"%Y%m%d")
 
-if [ "$today" -ge "$next_check" ] || [ "$today" -ge "$next_check2" ]
+if [ "$today" -ge "$next_check" ]
 then
   rm "$last_check_file" > /dev/null 2>&1
   echo "$today" > "$last_check_file"
