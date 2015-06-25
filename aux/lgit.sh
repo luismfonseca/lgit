@@ -112,6 +112,7 @@ then
   git status
   echo "Actions to available perfom:"
   echo -e "  ${red}c${noColor}: Git commit"
+  echo -e "  ${red}a${noColor}: Git commit ammend"
   echo -e "  ${red}p${noColor}: Git commit & git push"
   echo -e "  ${red}q${noColor}: Quit lgit"
   read -n 1 action
@@ -120,6 +121,10 @@ then
       echo ". Commit message: "
       read message
       git commit -m "${message}"
+    ;;
+    a)
+      echo " Commit ammend"
+      git commit --amend
     ;;
     p)
       echo ". Commit message: "
