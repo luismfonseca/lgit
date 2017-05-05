@@ -113,7 +113,7 @@ then
   git status
   echo "Actions to available perfom:"
   echo -e "  ${red}c${noColor}: Git commit"
-  echo -e "  ${red}a${noColor}: Git commit ammend"
+  echo -e "  ${red}a${noColor}: Git commit amend"
   echo -e "  ${red}p${noColor}: Git commit & git push"
   echo -e "  ${red}q${noColor}: Quit lgit"
   read -n 1 action
@@ -124,7 +124,7 @@ then
       git commit -m "${message}"
     ;;
     a)
-      echo " Commit ammend"
+      echo " Commit amend"
       git commit --amend
     ;;
     p)
