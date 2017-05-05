@@ -2,6 +2,7 @@
 noColor='\033[0m'
 red='\033[0;31m'
 date_format="%Y-%m-%d %H:%M:%S"
+export LESS=-R
 
 git status > /dev/null 2>&1
 if [ $? != 0 ]
