@@ -3,6 +3,7 @@ noColor='\033[0m'
 red='\033[0;31m'
 date_format="%Y-%m-%d %H:%M:%S"
 export LESS=-R
+script_base_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)
 
 git status > /dev/null 2>&1
 if [ $? != 0 ]
@@ -20,7 +21,7 @@ perform_action_on_file() {
   extra_diff_args=$2
   clear
   date +"$date_format"
-  git diff $extra_diff_args "$topdir/$file"
+  git diff --color $extra_diff_args "$topdir/$file" | $(echo "$script_base_path/diff-highlight/diff-highlight") | less
   git status
   echo "Actions to available perform:"
   echo -e "  ${red}a${noColor}: Git Add File"
