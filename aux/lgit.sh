@@ -93,7 +93,7 @@ then
       git ls-files -z -o --exclude-standard | xargs -0 git add
     ;;
     r)
-      git clean -dfx
+      git clean -df
     ;;
     s)
     ;;
