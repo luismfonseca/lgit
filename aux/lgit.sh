@@ -13,8 +13,20 @@ then
 fi
 
 topdir=$(git rev-parse --show-toplevel)
-files=$(git diff --name-only | cat)
-untrackedfiles=$(git ls-files --others --exclude-standard)
+files_unformatted=$(git diff --name-only | cat)
+files=()
+while read file
+do
+  files+=("$file")
+done <<< "$files_unformatted"
+
+untrackedfiles_unformatted=$(git ls-files --others --exclude-standard)
+untrackedfiles=()
+while read untrackedfile
+do
+  untrackedfiles+=("$untrackedfile")
+done <<< "$untrackedfiles_unformatted"
+
 
 perform_action_on_file() {
   file=$1
@@ -58,7 +70,7 @@ perform_action_on_file() {
   esac
 }
 
-for file in $files
+for file in "${files[@]}"
 do
   perform_action_on_file "$file" "--"
 done
@@ -69,7 +81,7 @@ then
   date +"$date_format"
   echo "Untracked files:"
   echo ""
-  for untrackedfile in $untrackedfiles
+  for untrackedfile in "${untrackedfiles[@]}"
   do
     echo -e "\t${red}$untrackedfile${noColor}"
   done
@@ -84,7 +96,7 @@ then
   read -n 1 action
   case $action in
     y)
-    for untrackedfile in $untrackedfiles
+    for untrackedfile in "${untrackedfiles[@]}"
     do
       perform_action_on_file "$untrackedfile" "--no-index -- /dev/null"
     done
