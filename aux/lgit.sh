@@ -70,12 +70,15 @@ perform_action_on_file() {
   esac
 }
 
-for file in "${files[@]}"
-do
-  perform_action_on_file "$file" "--"
-done
+if [ "$files_unformatted" ]
+then
+  for file in "${files[@]}"
+  do
+    perform_action_on_file "$file" "--"
+  done
+fi
 
-if [ "$untrackedfiles" ]
+if [ "$untrackedfiles_unformatted" ]
 then
   clear
   date +"$date_format"
