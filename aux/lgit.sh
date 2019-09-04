@@ -89,8 +89,8 @@ then
     echo -e "\t${red}$untrackedfile${noColor}"
   done
   echo -e ""
-  echo "Do you which to add them?"
-  echo "Actions to available perfom:"
+  echo "Do you wish to add them?"
+  echo "Actions available to perform:"
   echo -e "  ${red}y${noColor}: Yes"
   echo -e "  ${red}a${noColor}: Yes, all"
   echo -e "  ${red}r${noColor}: No, remove all"
@@ -127,7 +127,7 @@ then
   clear
   date +"$date_format"
   git status
-  echo "Actions to available perfom:"
+  echo "Actions available to perform:"
   echo -e "  ${red}c${noColor}: Git commit"
   echo -e "  ${red}a${noColor}: Git commit amend"
   echo -e "  ${red}p${noColor}: Git commit & git push"
