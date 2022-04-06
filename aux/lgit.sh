@@ -135,9 +135,7 @@ then
   read -n 1 action
   case $action in
     c)
-      echo ". Commit message: "
-      read message
-      git commit -m "${message}"
+      git commit
     ;;
     a)
       echo " Commit amend"
